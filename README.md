@@ -18,3 +18,17 @@ https://x.com/example/status/123?t=abc&s=20
 ## テスト
 
 最近のデスクトップ版ChromeとNode.jsをインストールした環境で `node --test` を実行します。Chromeが標準の場所にない場合は環境変数 `CHROME_BIN` に実行ファイルを指定します。テストは一時プロファイルと検証用のページを使い、実際のXには接続しません。
+
+## リリース
+
+1. `extension/manifest.json` の `version` を更新し、変更を既定ブランチに入れます。
+2. たとえばバージョンが `0.1.0` なら、そのコミットに `v0.1.0` を付けてリモートに送ります。
+
+   ```sh
+   git tag v0.1.0
+   git push origin refs/tags/v0.1.0
+   ```
+
+Chromeのテストが通ると、GitHub Releasesに `NoQueryX-v0.1.0.zip` と `SHA256SUMS` が公開されます。ZIPを展開し、`manifest.json` があるフォルダをChromeで読み込みます。
+
+Actionsの **Deployment** を手動で実行した場合は、テストとZIPの作成まで行い、公開はしません。ローカルでは `bash scripts/package-extension.sh` で、コミット済みの拡張を `release/` に出力できます。
